@@ -1,0 +1,25 @@
+version: '3'
+
+services:
+  nexus:
+    image: sonatype/nexus3
+    volumes:
+      - 'nexus-data:/nexus-data'
+    ports:
+      - '8081:8081'
+      - '8082:8082'
+
+  jenkins:
+    image: jenkins/jenkins:latest
+    ports:
+      - '8080:8080'
+    volumes:
+      - './jenkins-data:/var/jenkins_home'
+
+  jenkins_slave:
+    build: .
+    volumes:
+      - './jenkins_slave:/usr/src/myapp'
+
+volumes:
+  nexus-data: {}
